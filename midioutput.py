@@ -8,10 +8,7 @@ class MIDIOutput:
 
 	# Initialize stuff
 	def __init__(self):
-		print('init midi output')
-
-		# Print out all available midi ports
-		self.print_midi_ports()
+		#print('init midi output')
 
 		# Open output port that will be used
 		self.port = self.open_port(MIDI_OUT_PORT)
@@ -21,21 +18,15 @@ class MIDIOutput:
 
 	# Closes this instances port
 	def close_port(self):
-		print('output port closed: ', self.port.name)
+		print('Output port closed: ', self.port.name)
 		self.port.close()
 
 	# Opens output port given the name and returns it
 	def open_port(self, port_name):
-		print('output port opened: ', port_name)
+		print('Output port opened: ', port_name)
 		return mido.open_output(port_name, autoreset=True)
 
-	# Prints available output ports out (use for testing)
-	def print_midi_ports(self):
-		print('available output ports')
-		for port in mido.get_output_names():
-			print(port)
-
-	# Sends a spicy chord to output as a test for 2 seconds
+	# Sends a chord to output as a test for 2 seconds
 	def welcome_message(self):
 		# Create messages
 		msg1 = mido.Message('note_on', channel=2, note=65, velocity=64, time=6.2)
