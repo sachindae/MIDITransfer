@@ -3,6 +3,7 @@ import socket
 import threading
 
 from constant import LOCAL_IP, LOCAL_PORT, SERVER_IP, SERVER_PORT
+from parsing import parse_data
 
 # Class for creating a client socket
 class Client:
@@ -49,40 +50,21 @@ class Client:
 		self.input.set_recipient(server)
 		self.running = True
 
-		# Loops until stopped by main class
+		# Loops until stopped by main controller
 		while self.running:
 
 			# Get 128 byte buffer
 			data = server.recv(128)
 							
-			# If not empty, assume its a legit message
+			# If not empty, assume it is valid data
 			if ( data != b''):
 
-				# Decode msg
-				dec = data.decode()
-				print('Data: ', dec)
-		
-				msgNum = 0
-				endIdx = 0
+				# Decode the data received
+				decoded_data = data.decode()
+				print('Data: ', decoded_data)
 
-				# Parse each note in data
-				while ( endIdx < len(dec) ):
-
-					startIdx = (msgNum) * 8
-					endIdx = startIdx + 8
-
-					# If aftertouch message is received, skip for now
-					if (dec[startIdx] == 'D'):
-						break
-
-					# Send message received to output port
-					msg = mido.Message.from_hex(' ' + dec[startIdx:endIdx])
-					self.output_port.send(msg)
-
-					print("Receiver Msg: ", msg)
-
-					msgNum += 1
-					endIdx += 1
+				# Parse the data 
+				parse_data(decoded_data, self.output_port)
 
 		server.shutdown()
 		server.close()
@@ -96,3 +78,5 @@ class Client:
 		client.connect((SERVER_IP, SERVER_PORT))
 
 		return client
+
+	
