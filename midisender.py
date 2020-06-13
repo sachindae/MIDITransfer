@@ -11,7 +11,7 @@ class MIDISender:
 		print('init midi sender')
 
 		# Print out all available midi ports
-		# self.print_midi_ports()
+		self.print_midi_ports()
 
 		# Create a client socket with 15 second timeout
 		client = socket.socket()
@@ -28,6 +28,7 @@ class MIDISender:
 			print('Sender Msg: ', msg)
 			print('Hex:', msg.hex())
 			self.client.send(msg.hex().encode())
+
 
 	# Closes this instances port
 	def close_port(self):
