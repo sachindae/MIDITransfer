@@ -42,7 +42,7 @@ class MIDIReceiver:
 		while self.running:
 
 			# Get 256 byte buffer
-			data = clientSocket.recv(256)
+			data = clientSocket.recv(1024)
 							
 			# If not empty, assume its a legit message
 			if ( data != b''):

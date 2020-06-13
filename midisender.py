@@ -26,6 +26,7 @@ class MIDISender:
 	def get_messages(self):
 		for msg in self.port.iter_pending():
 			print('Sender Msg: ', msg)
+			print('Hex:', msg.hex())
 			self.client.send(msg.hex().encode())
 
 	# Closes this instances port
