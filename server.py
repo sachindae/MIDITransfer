@@ -8,13 +8,13 @@ from constant import LOCAL_IP, LOCAL_PORT, SERVER_IP, SERVER_PORT
 class Server:
 
 	# Initialize stuff
-	def __init__(self, output_port, input):
+	def __init__(self, output_port, input_obj):
 		#print('init server')
 
 		# Start server thread
 		self.start_server_thread()
 		self.running = False
-		self.input = input
+		self.input = input_obj
 		self.output_port = output_port
 
 	# Spawns a thread to handle server on
