@@ -19,11 +19,24 @@ class MIDIInput:
 		self.recipient = socket
 
 	# Method that listens for messages from input keyboard and sends to recipient
-	def send_messages(self):
-		for msg in self.port.iter_pending():
+	def send_messages(self, msg):
+		print('Sender Msg: ', msg)
+		self.recipient.send(msg.hex().encode())
+
+			# Blocking statement that listens for messages
+			#for msg in self.port:
+				#try:
+					#print('Sender Msg: ', msg)
+					#self.recipient.send(msg.hex().encode())
+				#except KeyboardInterrupt:
+					#return
+
+		
+
+		#for msg in self.port.iter_pending():
 			#print('Sender Msg: ', msg)
 			#print('Hex:', msg.hex())
-			self.recipient.send(msg.hex().encode())
+			#self.recipient.send(msg.hex().encode())
 
 	# Closes this instances port
 	def close_port(self):
@@ -33,4 +46,4 @@ class MIDIInput:
 	# Opens input port given the name and returns it
 	def open_port(self, port_name):
 		print('Input port opened: ', port_name)
-		return mido.open_input(port_name)
+		return mido.open_input(port_name, callback=self.send_messages)

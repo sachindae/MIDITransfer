@@ -39,9 +39,9 @@ class MidiTransfer:
 					continue
 
 			while True:
-
-				# Check for any new messages from input to send
-				self.input.send_messages()
+				continue
+			# Check for any new messages from input to send
+			#self.input.send_messages()
 
 		except KeyboardInterrupt:
 

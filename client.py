@@ -2,7 +2,7 @@ import mido
 import socket
 import threading
 
-from constant import LOCAL_IP, LOCAL_PORT, SERVER_IP, SERVER_PORT
+from constant import SERVER_IP, SERVER_PORT
 from parsing import parse_data
 
 # Class for creating a client socket
@@ -59,6 +59,8 @@ class Client:
 			# If not empty, assume it is valid data
 			if ( data != b''):
 
+				print("RECEIVED DATA FROM SERVER")
+
 				# Decode the data received
 				decoded_data = data.decode()
 				print('Data: ', decoded_data)
@@ -74,7 +76,7 @@ class Client:
 
 		# Create a client socket with 15 second timeout
 		client = socket.socket()
-		client.settimeout(15)
+		#client.settimeout(15.0)
 		client.connect((SERVER_IP, SERVER_PORT))
 
 		return client

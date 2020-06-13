@@ -2,7 +2,7 @@ import mido
 import socket
 import threading
 
-from constant import LOCAL_IP, LOCAL_PORT, SERVER_IP, SERVER_PORT
+from constant import LOCAL_IP, LOCAL_PORT
 from parsing import parse_data
 
 # Class for creating a server socket
