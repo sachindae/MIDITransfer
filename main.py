@@ -16,6 +16,7 @@ class MidiTransfer:
 		self.output = MIDIOutput()		# Opens output port
 		self.server = None				# Init value
 		self.client = None				# Init value
+		self.is_server = is_server		# Server or client
 
 		# Creates server or client
 		if is_server:
@@ -30,7 +31,7 @@ class MidiTransfer:
 		try:
 
 			# Wait till server or client are running
-			if self.is_server
+			if self.is_server:
 				while not self.server.running:
 					continue
 			else:
@@ -45,7 +46,7 @@ class MidiTransfer:
 		except KeyboardInterrupt:
 
 			# Stops the thread for server or client
-			if self.is_server
+			if self.is_server:
 				self.server.running = False
 			else:
 				self.client.running = False
