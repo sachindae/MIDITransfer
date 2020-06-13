@@ -1,12 +1,6 @@
-import mido
-import socket
-
-from midiinput import MIDIInput 
 from midioutput import MIDIOutput 
 from midisender import MIDISender 
 from midireceiver import MIDIReceiver 
-
-from constant import LOCAL_IP, SERVER_IP, PORT
 
 # Main class used for running the program
 class MidiTransfer:

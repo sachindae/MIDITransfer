@@ -16,7 +16,7 @@ class MIDISender:
 		# Create a client socket with 15 second timeout
 		client = socket.socket()
 		client.settimeout(15)
-		client.connect((SERVER_IP, PORT))
+		client.connect((SERVER_IP, SERVER_PORT))
 
 		# Open input port that will be used
 		self.port = self.open_port(MIDI_IN_PORT)
