@@ -8,13 +8,13 @@ from constant import LOCAL_IP, LOCAL_PORT, SERVER_IP, SERVER_PORT
 class Client:
 
 	# Initialize stuff
-	def __init__(self, output_port, input):
+	def __init__(self, output_port, input_obj):
 		#print('init client')
 
 		# Start client thread
 		self.start_client_thread()
 		self.running = False
-		self.input = input
+		self.input = input_obj
 		self.output_port = output_port
 
 	# Spawns a thread to handle server on
@@ -43,7 +43,7 @@ class Client:
 			print("Connection refused by server, restart program after exiting with ctrl + c")
 			return
 
-		print("Connection found: ", server.gethostbyname())
+		print("Connection found: ", server.getpeername())
 
 		# Set the recipient of sender
 		self.input.set_recipient(server)

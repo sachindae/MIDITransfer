@@ -20,9 +20,9 @@ class MidiTransfer:
 
 		# Creates server or client
 		if is_server:
-			self.server = Server(self.output.port, input)
+			self.server = Server(self.output.port, self.input)
 		else:
-			self.client = Client(self.output.port, input)
+			self.client = Client(self.output.port, self.input)
 
 	# Program loop
 	def loop(self):
