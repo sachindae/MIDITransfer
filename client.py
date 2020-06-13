@@ -68,7 +68,6 @@ class Client:
 				# Parse the data 
 				parse_data(decoded_data, self.output_port)
 
-		server.shutdown()
 		server.close()
 
 	# Method that creates a socket and connects to server

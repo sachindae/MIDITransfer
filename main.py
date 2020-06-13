@@ -1,5 +1,6 @@
 import mido
 import sys
+import time
 
 from midioutput import MIDIOutput 
 from midiinput import MIDIInput 
@@ -38,10 +39,10 @@ class MidiTransfer:
 				while not self.client.running:
 					continue
 
-			while True:
-				continue
+			#while True:
+				#time.sleep(5)
 			# Check for any new messages from input to send
-			#self.input.send_messages()
+			self.input.send_messages()
 
 		except KeyboardInterrupt:
 
