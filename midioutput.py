@@ -11,7 +11,7 @@ class MIDIOutput:
 		print('init midi output')
 
 		# Print out all available midi ports
-		# self.print_midi_ports()
+		self.print_midi_ports()
 
 		# Open output port that will be used
 		self.port = self.open_port(MIDI_OUT_PORT)

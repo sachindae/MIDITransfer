@@ -1,13 +1,13 @@
 # Output port you are using
-MIDI_OUT_PORT = 'LoopBe Internal MIDI 1'
+MIDI_OUT_PORT = 'MIDI Transfer Bus 1'
 
 # Input port you are using
-MIDI_IN_PORT = '5- SL MkII 3'
+MIDI_IN_PORT = 'MIDI Transfer Bus 1'
 
 # Local public IP/port
-LOCAL_IP = 'localhost'
-LOCAL_PORT = 8000
+LOCAL_IP = '192.168.1.21'
+LOCAL_PORT = 1445
 
 # Server public IP/port
-SERVER_IP = 'localhost'
-SERVER_PORT = 8000
+SERVER_IP = '192.168.1.151'
+SERVER_PORT = 1445

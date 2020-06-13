@@ -42,10 +42,34 @@ class MIDIReceiver:
 		while self.running:
 
 			# Get 256 byte buffer
-			data = clientSocket.recv(256)
+			data = clientSocket.recv(1024)
 							
 			# If not empty, assume its a legit message
 			if ( data != b''):
-				msg = mido.Message.from_hex(data.decode())
-				print("Receiver Msg: ", msg)
-				output_port.send(msg)
+				# Decode msg
+				dec = data.decode()
+				print('Data: ', dec)
+		
+				msgNum = 0
+				endIdx = 0
+				msg = ''
+
+				# Parse each note in data
+				while ( endIdx <= len(dec) ):
+
+					startIdx = (msgNum) * 8
+					endIdx = startIdx + 8
+					#print('s: ', startIdx, 'e: ', endIdx)
+
+					#print("SLICE ", msgNum, ": ", dec[startIdx:endIdx])
+					if (dec[startIdx] == 'D'):
+						break
+					msg = mido.Message.from_hex(' ' + dec[startIdx:endIdx])
+
+					print("Receiver Msg: ", msg)
+					output_port.send(msg)
+					msgNum += 1
+					endIdx += 1
+
+		server.shutdown()
+		server.close()
