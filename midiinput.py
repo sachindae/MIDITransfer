@@ -1,8 +1,6 @@
 import mido 
-import socket
-import time # for sleeping
 
-from constant import MIDI_IN_PORT, SERVER_IP, SERVER_PORT
+from constant import MIDI_IN_PORT
 
 # Class for handling midi input received by computer
 class MIDIInput:
@@ -20,8 +18,6 @@ class MIDIInput:
 
 	# Method that listens for messages from input keyboard and sends to recipient
 	def send_messages(self):
-		#print('Sender Msg: ', msg)
-		#self.recipient.send((msg.hex()+('xxxxxxxxxxxxxxxxx'*10)+'\n').encode())
 
 		# Blocking statement that listens for messages
 		for msg in self.port:
@@ -30,11 +26,6 @@ class MIDIInput:
 				self.recipient.send(msg.hex().encode())
 			except KeyboardInterrupt:
 				break
-
-		#for msg in self.port.iter_pending():
-			#print('Sender Msg: ', msg)
-			#print('Hex:', msg.hex())
-			#self.recipient.send(msg.hex().encode())
 
 	# Closes this instances port
 	def close_port(self):

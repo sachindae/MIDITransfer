@@ -59,11 +59,9 @@ class Client:
 			# If not empty, assume it is valid data
 			if ( data != b''):
 
-				print("RECEIVED DATA FROM SERVER")
-
 				# Decode the data received
 				decoded_data = data.decode()
-				print('Data: ', decoded_data)
+				#print('Data: ', decoded_data)
 
 				# Parse the data 
 				parse_data(decoded_data, self.output_port)

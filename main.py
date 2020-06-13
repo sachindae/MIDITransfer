@@ -41,7 +41,8 @@ class MidiTransfer:
 
 			#while True:
 				#time.sleep(5)
-			# Check for any new messages from input to send
+
+			# Start sending MIDI whenever received from input
 			self.input.send_messages()
 
 		except KeyboardInterrupt:
