@@ -13,9 +13,9 @@ class Client:
 
 		# Start client thread
 		self.start_client_thread()
-		self.running = True
-		self.output_port = output_port
+		self.running = False
 		self.input = input
+		self.output_port = output_port
 
 	# Spawns a thread to handle server on
 	def start_client_thread(self):
@@ -47,6 +47,7 @@ class Client:
 
 		# Set the recipient of sender
 		self.input.set_recipient(server)
+		self.running = True
 
 		# Loops until stopped by main class
 		while self.running:

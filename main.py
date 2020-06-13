@@ -29,6 +29,14 @@ class MidiTransfer:
 		# Loop till ctrl+c pressed
 		try:
 
+			# Wait till server or client are running
+			if self.is_server
+				while not self.server.running:
+					continue
+			else:
+				while not self.client.running:
+					continue
+
 			while True:
 
 				# Check for any new messages from input to send
@@ -37,10 +45,10 @@ class MidiTransfer:
 		except KeyboardInterrupt:
 
 			# Stops the thread for server or client
-			if self.server == None:
-				self.client.running = False
-			else:
+			if self.is_server
 				self.server.running = False
+			else:
+				self.client.running = False
 
 			# Close MIDI ports after looping done
 			self.input.close_port()
