@@ -79,10 +79,11 @@ class Client:
 						msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
 						self.output_port.send(msg)
 
-						#print("Receiver Msg: ", msg)
+						print("Receiver Msg: ", msg)
 
 						msgNum += 1
 						endIdx += 1
+						
 			except ConnectionResetError:
 				print('Server closed, program ending press ctrl + c')
 				server.close()
