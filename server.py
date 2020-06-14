@@ -3,7 +3,7 @@ import socket
 import threading
 
 from constant import LOCAL_IP, LOCAL_PORT
-from parsing import parse_data
+#from parsing import parse_data
 
 # Class for creating a server socket
 class Server:
@@ -74,8 +74,27 @@ class Server:
 				decoded_data = data.decode()
 				#print('Data: ', decoded_data)
 
+				#print('test: ', mido.parse_all(decoded_data))
+
 				# Parse the data 
-				parse_data(decoded_data, self.output_port)
+				#parse_data(decoded_data, self.output_port)
+
+				endIdx = 0
+				msgNum = 0
+
+				# Parse each note in data
+				while ( endIdx < len(data) ):
+
+					startIdx = (msgNum) * 8
+					endIdx = startIdx + 8
+
+					msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
+					self.output_port.send(msg)
+
+					#print("Receiver Msg: ", msg)
+
+					msgNum += 1
+					endIdx += 1
 
 		print('Shutting down server')
 		server.shutdown(socket.SHUT_RDWR)

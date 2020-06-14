@@ -53,18 +53,39 @@ class Client:
 		# Loops until stopped by main controller
 		while self.running:
 
-			# Get 128 byte buffer
-			data = server.recv(128)
-							
-			# If not empty, assume it is valid data
-			if ( data != b''):
+			try:
+				# Get 128 byte buffer
+				data = server.recv(128)
+								
+				# If not empty, assume it is valid data
+				if ( data != b''):
 
-				# Decode the data received
-				decoded_data = data.decode()
-				#print('Data: ', decoded_data)
+					# Decode the data received
+					decoded_data = data.decode()
+					#print('Data: ', decoded_data)
 
-				# Parse the data 
-				parse_data(decoded_data, self.output_port)
+					# Parse the data 
+					#parse_data(decoded_data, self.output_port)
+
+					endIdx = 0
+					msgNum = 0
+
+					# Parse each note in data
+					while ( endIdx < len(data) ):
+
+						startIdx = (msgNum) * 8
+						endIdx = startIdx + 8
+
+						msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
+						self.output_port.send(msg)
+
+						#print("Receiver Msg: ", msg)
+
+						msgNum += 1
+						endIdx += 1
+			except ConnectionResetError:
+				print('Server closed, program ending press ctrl + c')
+				break
 
 		server.close()
 
