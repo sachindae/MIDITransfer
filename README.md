@@ -17,3 +17,7 @@ Project for peer-to-peer MIDI transfer
 - Run with -a to print out MIDI ports and IPs
 - Run with -d flag to print out MIDI ports
 - Run with -l and/or -p flags to print out local/public IP
+
+# TODO
+- Optimization for parsing/sending data
+- Allow for more than 2 people to communicate at a time
