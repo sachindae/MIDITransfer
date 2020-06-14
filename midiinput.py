@@ -21,11 +21,12 @@ class MIDIInput:
 
 		# Blocking statement that listens for messages
 		for msg in self.port:
-			try:
-				print('Sender Msg: ', msg)
-				self.recipient.send(msg.hex().encode())
-			except KeyboardInterrupt:
-				break
+			if msg.type in ('note_on', 'note_off'):
+				try:
+					print('Sender Msg: ', msg)
+					self.recipient.send(msg.hex().encode())
+				except KeyboardInterrupt:
+					break
 
 	# Closes this instances port
 	def close_port(self):
