@@ -72,7 +72,7 @@ class Server:
 
 				# Decode the data received
 				decoded_data = data.decode()
-				print('Data: ', decoded_data)
+				#print('Data: ', decoded_data)
 
 				#print('test: ', mido.parse_all(decoded_data))
 
@@ -91,7 +91,7 @@ class Server:
 					msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
 					self.output_port.send(msg)
 
-					print("Receiver Msg: ", msg)
+					print("Received Msg: ", msg)
 
 					msgNum += 1
 					endIdx += 1
