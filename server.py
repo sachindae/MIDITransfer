@@ -72,31 +72,57 @@ class Server:
 
 				# Decode the data received
 				decoded_data = data.decode()
-				#print('Data: ', decoded_data)
+				print('Data: ', decoded_data)
+
+				# Create thread for decoding and stuff
+				d = threading.Thread(target=self.decode_test, args=(decoded_data), daemon=True)
+
+				# Spawn the thread
+				d.start()
+
+
 
 				#print('test: ', mido.parse_all(decoded_data))
 
 				# Parse the data 
 				#parse_data(decoded_data, self.output_port)
 
-				endIdx = 0
-				msgNum = 0
+				#endIdx = 0
+				#msgNum = 0
 
 				# Parse each note in data
-				while ( endIdx < len(data) ):
+				#while ( endIdx < len(data) ):
 
-					startIdx = (msgNum) * 8
-					endIdx = startIdx + 8
+					#startIdx = (msgNum) * 8
+					#endIdx = startIdx + 8
 
-					msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
-					self.output_port.send(msg)
+					#msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
+					#self.output_port.send(msg)
 
 					#print("Receiver Msg: ", msg)
 
-					msgNum += 1
-					endIdx += 1
+					#msgNum += 1
+					#endIdx += 1
 
 		print('Shutting down server')
 		server.shutdown(socket.SHUT_RDWR)
 		server.close()
+
+	def decode_test(self, decoded_data):
+		endIdx = 0
+		msgNum = 0
+
+		# Parse each note in data
+		while ( endIdx < len(data) ):
+
+			startIdx = (msgNum) * 8
+			endIdx = startIdx + 8
+
+			msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
+			self.output_port.send(msg)
+
+			print("Receiver Msg: ", msg)
+
+			msgNum += 1
+			endIdx += 1
 

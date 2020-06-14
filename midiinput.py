@@ -23,7 +23,7 @@ class MIDIInput:
 		for msg in self.port:
 			if msg.type in ('note_on', 'note_off'):
 				try:
-					#print('Sender Msg: ', msg)
+					print('Sender Msg: ', msg)
 					self.recipient.send(msg.hex().encode())
 				except KeyboardInterrupt:
 					break

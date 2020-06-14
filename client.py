@@ -85,7 +85,8 @@ class Client:
 						endIdx += 1
 			except ConnectionResetError:
 				print('Server closed, program ending press ctrl + c')
-				break
+				server.close()
+				return
 
 		server.close()
 
