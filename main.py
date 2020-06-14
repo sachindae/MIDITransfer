@@ -1,12 +1,12 @@
-import mido
 import sys
-import time
 
 from midioutput import MIDIOutput 
 from midiinput import MIDIInput 
 from server import Server 
 from client import Client 
 
+from information import print_ports, print_local_ip, print_public_ip, print_all
+	
 # Main class used for running the program
 class MidiTransfer:
 
@@ -39,10 +39,7 @@ class MidiTransfer:
 				while not self.client.running:
 					continue
 
-			#while True:
-				#time.sleep(5)
-
-			# Start sending MIDI whenever received from input
+			# Start sending MIDI whenever received from input (blocking)
 			self.input.send_messages()
 
 		except KeyboardInterrupt:
@@ -57,20 +54,6 @@ class MidiTransfer:
 			self.input.close_port()
 			self.output.close_port()
 
-# Method that prints out MIDI input/output ports
-def print_ports():
-	# Print input ports
-	print('\navailable input ports')
-	print('---------------------')
-	for port in mido.get_input_names():
-		print(port)
-
-	# Print output ports
-	print('\navailable output ports')
-	print('---------------------')
-	for port in mido.get_output_names():
-		print(port)
-	print()
 
 # Start the program and loop it
 if __name__ == "__main__":
@@ -78,12 +61,34 @@ if __name__ == "__main__":
 	# Parse cmd line args (-s for server, -d for display ports)
 	is_server = '-s' in sys.argv
 	display_ports = '-d' in sys.argv
+	display_local_ip = '-l' in sys.argv
+	display_public_ip = '-p' in sys.argv
+	display_all = '-a' in sys.argv
 
-	# Display ports or execute
-	if display_ports:
+	# Checks flags
+	if display_all:
+
+		# Displays all information needed (ports, ips)
+		print_all()
+
+	elif display_ports:
 
 		# Display MIDI ports available in console
 		print_ports()
+
+	elif display_local_ip or display_public_ip:
+
+		print()
+
+		# Display your computers IP
+		if display_local_ip:
+			print_local_ip()
+
+		# Display your routers IP
+		if display_public_ip:
+			print_public_ip()
+
+		print()
 
 	else:
 		print()

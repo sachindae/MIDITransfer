@@ -8,7 +8,6 @@ class MIDIOutput:
 
 	# Initialize stuff
 	def __init__(self):
-		#print('init midi output')
 
 		# Open output port that will be used
 		self.port = self.open_port(MIDI_OUT_PORT)

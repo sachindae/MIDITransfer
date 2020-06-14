@@ -10,7 +10,6 @@ class Server:
 
 	# Initialize stuff
 	def __init__(self, output_port, input_obj):
-		#print('init server')
 
 		# Start server thread
 		self.start_server_thread()
@@ -35,7 +34,7 @@ class Server:
 		server = socket.socket()
 		server.bind((ip_address, port))
 		server.listen()
-		server.settimeout(15.0)
+		#server.settimeout(15.0)
 
 		return server
 
@@ -47,11 +46,11 @@ class Server:
 		clientSocket = ''
 		clientAddress = ''
 
-		# Accept connections for 15 seconds
+		# Wait until a client connects to server
 		try:
 			clientSocket, clientAddress = server.accept()
 		except socket.timeout:
-			print("No client connected within 15 seconds, restart program after exiting with ctrl + c")
+			print("Server timed out while waiting for clients, restart program after exiting with ctrl + c")
 			server.close()
 			return
 
@@ -73,8 +72,6 @@ class Server:
 				# Decode the data received
 				decoded_data = data.decode()
 				#print('Data: ', decoded_data)
-
-				#print('test: ', mido.parse_all(decoded_data))
 
 				# Parse the data 
 				#parse_data(decoded_data, self.output_port)
