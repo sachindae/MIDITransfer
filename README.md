@@ -14,6 +14,6 @@ Project for peer-to-peer MIDI transfer
 # Execution (python main.py)
 - Run with no flags to run as client
 - Run with -s flag to run as server
-- Run with -a to print out ports and IPs
-- Run with -d flag to print out ports
-- Run with -l and or -p flags to print out local/public IP
+- Run with -a to print out MIDI ports and IPs
+- Run with -d flag to print out MIDI ports
+- Run with -l and/or -p flags to print out local/public IP
