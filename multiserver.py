@@ -43,40 +43,49 @@ class MultiServer:
 		# Add client to input recipient socket list
 		self.input.add_recipient(client)
 
-		print('Addr: ', addr, ' Data: ', 'fk')
+		print("RUNNING: ", self.running)
 
 		# Loops until stopped by main controller
-		while self.running:
+		try:
+			while True:
 
-			# Get 128 byte buffer
-			data = clientSocket.recv(128)
-							
-			# If not empty, assume it is valid data
-			if ( data != b''):
+				# Get 128 byte buffer
+				data = client.recv(128)
+								
+				# If not empty, assume it is valid data
+				if ( data != b''):
 
-				# Decode the data received
-				decoded_data = data.decode()
-				#print('Data: ', decoded_data)
+					# Send to all connected ports
+					for recipient in self.input.recipients:
+						recipient.send(data)
 
-				# Parse the data 
-				#parse_data(decoded_data, self.output_port)
+					# Decode the data received
+					decoded_data = data.decode()
+					#print('Data: ', decoded_data)
+					print('Addr: ', addr, ' Data: ', decoded_data)
 
-				endIdx = 0
-				msgNum = 0
+					# Parse the data 
+					#parse_data(decoded_data, self.output_port)
 
-				# Parse each note in data
-				while ( endIdx < len(data) ):
+					endIdx = 0
+					msgNum = 0
 
-					startIdx = (msgNum) * 8
-					endIdx = startIdx + 8
+					# Parse each note in data
+					while ( endIdx < len(data) ):
 
-					msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
-					self.output_port.send(msg)
+						startIdx = (msgNum) * 8
+						endIdx = startIdx + 8
 
-					print("Received Msg: ", msg)
+						msg = mido.Message.from_hex(decoded_data[startIdx:endIdx])
+						self.output_port.send(msg)
 
-					msgNum += 1
-					endIdx += 1
+
+						print("Received Msg: ", msg)
+
+						msgNum += 1
+						endIdx += 1
+		except KeyboardInterrupt:
+			print('done')
 
 		# Remove client from input recipient socket list
 		self.input.remove_recipient(client)			
@@ -87,20 +96,31 @@ class MultiServer:
 	# Method that accepts connections and send messages received to receiver
 	def run_server(self, server):
 
-		self.running = True
-
 		# Local server wait till someone connects to it
 		print("Waiting for connection to clients...")
 		clientSocket = ''
 		clientAddress = ''
 
-		while self.running:
+		clientSocket, clientAddress = server.accept()
+		print("New connection found: ", clientAddress)
+
+		# Create thread for client
+		s = threading.Thread(target=self.on_new_client, args=(clientSocket, clientAddress,), daemon=True)
+
+				# Spawn the thread
+		s.start()
+
+		while True:
+
+			#print('running')
 
 			# Wait until a client connects to server
 			try:
 				# Wait for new connections
 				clientSocket, clientAddress = server.accept()
 				print("New connection found: ", clientAddress)
+
+				self.running = True
 
 				# Create thread for client
 				s = threading.Thread(target=self.on_new_client, args=(clientSocket, clientAddress,), daemon=True)
@@ -114,7 +134,7 @@ class MultiServer:
 				return
 
 		# Shut down server
-		print('Shutting down server')
+		print('Shutting down multi server')
 		server.shutdown(socket.SHUT_RDWR)
 		server.close()
 

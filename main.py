@@ -29,7 +29,10 @@ class MidiTransfer:
 
 		# Creates server or client
 		if is_server:
-			self.server = Server(self.output.port, self.input)
+			if is_multi:
+				self.server = MultiServer(self.output.port, self.input)
+			else:
+				self.server = Server(self.output.port, self.input)
 		else:
 			self.client = Client(self.output.port, self.input)
 
