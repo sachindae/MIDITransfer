@@ -5,15 +5,23 @@ from midiinput import MIDIInput
 from server import Server 
 from client import Client 
 
+from multimidiinput import MultiMIDIInput
+from multiserver import MultiServer
+
 from information import print_ports, print_local_ip, print_public_ip, print_all
 	
 # Main class used for running the program
 class MidiTransfer:
 
 	# Initialize the program
-	def __init__(self, is_server):
+	def __init__(self, is_server, is_multi):
 
-		self.input = MIDIInput()		# Opens input port
+		# Check if need to send input to multiple or just one socket
+		if is_multi:
+			self.input = MultiMIDIInput()	# Opens multi input port
+		else:
+			self.input = MIDIInput()		# Opens input port
+
 		self.output = MIDIOutput()		# Opens output port
 		self.server = None				# Init value
 		self.client = None				# Init value
@@ -60,6 +68,7 @@ if __name__ == "__main__":
 
 	# Parse cmd line args (-s for server, -d for display ports)
 	is_server = '-s' in sys.argv
+	is_multi = '-m' in sys.argv
 	display_ports = '-d' in sys.argv
 	display_local_ip = '-l' in sys.argv
 	display_public_ip = '-p' in sys.argv
@@ -94,7 +103,7 @@ if __name__ == "__main__":
 		print()
 
 		# Start the program
-		prog = MidiTransfer(is_server)
+		prog = MidiTransfer(is_server, is_multi)
 		prog.loop()
 
 		print()
