@@ -43,8 +43,6 @@ class MultiServer:
 		# Add client to input recipient socket list
 		self.input.add_recipient(client)
 
-		print("RUNNING: ", self.running)
-
 		# Loops until stopped by main controller
 		try:
 			while True:
@@ -110,17 +108,15 @@ class MultiServer:
 				# Spawn the thread
 		s.start()
 
-		while True:
+		self.running = True
 
-			#print('running')
+		while True:
 
 			# Wait until a client connects to server
 			try:
 				# Wait for new connections
 				clientSocket, clientAddress = server.accept()
 				print("New connection found: ", clientAddress)
-
-				self.running = True
 
 				# Create thread for client
 				s = threading.Thread(target=self.on_new_client, args=(clientSocket, clientAddress,), daemon=True)

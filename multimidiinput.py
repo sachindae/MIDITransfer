@@ -23,10 +23,11 @@ class MultiMIDIInput:
 
 				# Press ctrl + c while sending a midi input signal to stop
 				try:
-					#print('Sent Msg: ', msg)
+					print('Sent Msg: ', msg)
 
 					# Sends MIDI message to the connected recipients
 					for recipient in self.recipients:
+						print('Addr: ', recipient.getpeername())
 						recipient.send(msg.hex().encode())
 
 				except KeyboardInterrupt:
@@ -34,10 +35,12 @@ class MultiMIDIInput:
 
 	# Adds recipient to MIDI input
 	def add_recipient(self, socket):
+		print('RECIPIENT ADDED')
 		self.recipients.append(socket)
 
 	# Removes recipient from MIDI input
 	def remove_recipient(self, socket):
+		print('RECIPIENT REMOVED')
 		self.recipients.remove(socket)
 
 	# Closes this instances port
